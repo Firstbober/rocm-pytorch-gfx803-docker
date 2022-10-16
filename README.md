@@ -7,6 +7,10 @@ After creating container, you will be logged as `sduser` with activated python3.
 
 Supports docker and podman.
 
+torch, torchvision and tensorflow-rocm packages are downloaded from https://github.com/xuhuisheng/rocm-gfx803
+
+Every downloaded package should be in `/packages`.
+
 ## Building image
 ```
 podman build -t rocm-pytorch-gfx803 ./rocm-pytorch-gfx803-docker
