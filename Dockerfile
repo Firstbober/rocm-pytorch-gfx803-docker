@@ -26,7 +26,7 @@ RUN cd /packages && dpkg -i rocblas_2.45.0.50300-63.20.04_amd64.deb && \
 
 # Build roctracer required for pytorch
 RUN python -m pip install CppHeaderParser argparse && \
-    git clone -b amd-master https://github.com/ROCm-Developer-Tools/roctracer --depth 1 && \
+    git clone -b rocm-5.3.0 https://github.com/ROCm-Developer-Tools/roctracer --depth 1 && \
     mkdir roctracer/build && \
     cd roctracer/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/rocm .. && make -j8 && make install && \
     cd ../../ && rm -rf ./environ && rm -rf roctracer
