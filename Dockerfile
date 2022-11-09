@@ -1,4 +1,4 @@
-FROM docker.io/rocm/pytorch
+FROM docker.io/rocm/pytorch:rocm5.3_ubuntu20.04_py3.7_pytorch_staging
 
 # Set env var for gfx803 
 ENV ROC_ENABLE_PRE_VEGA=1
