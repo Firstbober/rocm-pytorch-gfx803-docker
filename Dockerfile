@@ -47,3 +47,6 @@ RUN /bin/bash -c "python3.8 -m venv ./environ && \
     python -m pip install /packages/tensorflow_rocm-2.8.0-cp38-cp38-linux_x86_64.whl"
 
 CMD ["bash", "-l"]
+
+# Make sure torch actually imports cleanly, or fail the build
+RUN /home/sduser/environ/bin/python -c "import torch"
