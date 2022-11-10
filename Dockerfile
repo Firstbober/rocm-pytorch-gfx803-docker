@@ -45,5 +45,13 @@ RUN /bin/bash -c "python3.8 -m venv ./environ && \
     python -m pip install /packages/torch-1.11.0a0+git503a092-cp38-cp38-linux_x86_64.whl && \
     python -m pip install /packages/torchvision-0.12.0a0+2662797-cp38-cp38-linux_x86_64.whl && \
     python -m pip install /packages/tensorflow_rocm-2.8.0-cp38-cp38-linux_x86_64.whl"
+    
+# roctracer ships .4 versions of its .so files, but pytorch needs .1 versions.
+# They seem to be compatible enough to substitute them.
+RUN sudo ln -s /opt/rocm-5.3.0/lib/libroctx64.so /opt/rocm-5.3.0/lib/libroctx64.so.1 && \
+    sudo ln -s /opt/rocm-5.3.0/lib/libroctracer64.so /opt/rocm-5.3.0/lib/libroctracer64.so.1
 
 CMD ["bash", "-l"]
+
+# Make sure torch actually imports cleanly, or fail the build
+RUN /home/sduser/environ/bin/python -c "import torch"
