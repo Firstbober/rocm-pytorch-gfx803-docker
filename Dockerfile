@@ -13,7 +13,7 @@ RUN mkdir /packages && cd /packages && \
     wget https://github.com/xuhuisheng/rocm-gfx803/releases/download/rocm500/tensorflow_rocm-2.8.0-cp38-cp38-linux_x86_64.whl
 
 # Install deps
-RUN cd /packages && dpkg -i rocblas_2.45.0.50300-63.20.04_amd64.deb && \
+RUN apt update -y && cd /packages && dpkg -i rocblas_2.45.0.50300-63.20.04_amd64.deb && \
     python3.8 -m pip install torch-1.11.0a0+git503a092-cp38-cp38-linux_x86_64.whl && \
     python3.8 -m pip install torchvision-0.12.0a0+2662797-cp38-cp38-linux_x86_64.whl && \
     python3.8 -m pip install tensorflow_rocm-2.8.0-cp38-cp38-linux_x86_64.whl && \
