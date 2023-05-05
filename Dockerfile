@@ -20,7 +20,7 @@ RUN apt update -y && cd /packages && dpkg -i rocblas_2.46.0.50401-84.20.04_amd64
     python3.8 -m pip install torch-1.11.0a0+git503a092-cp38-cp38-linux_x86_64.whl && \
     python3.8 -m pip install torchvision-0.12.0a0+2662797-cp38-cp38-linux_x86_64.whl && \
     python3.8 -m pip install tensorflow_rocm-2.8.0-cp38-cp38-linux_x86_64.whl && \
-    apt install -y liblmdb-dev libopencv-highgui-dev libopencv-contrib-dev libopenblas-dev python3.8-venv && \
+    apt install -y liblmdb-dev libopencv-highgui-dev libopencv-contrib-dev libopenblas-dev git python3.8-venv && \
     rm -rf rocblas_2.46.0.50401-84.20.04_amd64.deb && \
     rm -rf /var/lib/apt/lists
 
@@ -58,7 +58,16 @@ RUN /bin/bash -c "python3.8 -m venv ./environ && \
 RUN sudo ln -s /opt/rocm-5.4.1/lib/libroctx64.so /opt/rocm-5.4.1/lib/libroctx64.so.1 && \
     sudo ln -s /opt/rocm-5.4.1/lib/libroctracer64.so /opt/rocm-5.4.1/lib/libroctracer64.so.1
 
-CMD ["bash", "-l"]
+#CMD ["bash", "-l"]
 
 # Make sure torch actually imports cleanly, or fail the build
-RUN /root/environ/bin/python -c "import torch"
+RUN /root/environ/bin/python3.8 -c "import torch"
+
+RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+
+WORKDIR /root/stable-diffusion-webui
+
+EXPOSE 7860
+
+RUN pip3 install --upgrade pip
+CMD TORCH_COMMAND='pip -V' python3.8 launch.py --precision full --no-half
