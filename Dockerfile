@@ -58,16 +58,15 @@ RUN /bin/bash -c "python3.8 -m venv ./environ && \
 RUN sudo ln -s /opt/rocm-5.4.1/lib/libroctx64.so /opt/rocm-5.4.1/lib/libroctx64.so.1 && \
     sudo ln -s /opt/rocm-5.4.1/lib/libroctracer64.so /opt/rocm-5.4.1/lib/libroctracer64.so.1
 
-#CMD ["bash", "-l"]
 
 # Make sure torch actually imports cleanly, or fail the build
 RUN /root/environ/bin/python3.8 -c "import torch"
 
-RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+VOLUME /data
 
-WORKDIR /root/stable-diffusion-webui
+WORKDIR /data
 
 EXPOSE 7860
 
 RUN pip3 install --upgrade pip
-CMD TORCH_COMMAND='pip -V' python3.8 launch.py --precision full --no-half
+CMD git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui; cd stable-diffusion-webui && TORCH_COMMAND='pip -V' python3.8 launch.py --precision full --no-half --listen --medvram
