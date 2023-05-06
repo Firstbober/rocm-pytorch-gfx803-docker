@@ -69,4 +69,4 @@ WORKDIR /data
 EXPOSE 7860
 
 RUN pip3 install --upgrade pip
-CMD git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui; cd stable-diffusion-webui && TORCH_COMMAND='pip -V' python3.8 launch.py --precision full --no-half --listen --medvram
+CMD git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui; cd stable-diffusion-webui && TORCH_COMMAND='pip -V' python3.8 launch.py --precision full --no-half --listen --medvram --disable-safe-unpickle
